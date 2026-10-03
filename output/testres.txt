@@ -1,0 +1,35 @@
+.........F.........
+======================================================================
+FAIL: test_delimiter (test_split_nodes_delimiter.TestSplitNodesDelimiter.test_delimiter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/test_split_nodes_delimiter.py", line 10, in test_delimiter
+    self.assertEqual(split_node, [
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+        TextNode("This is some text with ", TextType.TEXT),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        TextNode("inline", TextType.BOLD),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        TextNode(" Markdown", TextType.TEXT),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ])
+    ^^
+AssertionError: Lists differ: [Text[69 chars]TextType.TEXT, None), TextNode( Markdown, TextType.TEXT, None)] != [Text[69 chars]TextType.BOLD, None), TextNode( Markdown, TextType.TEXT, None)]
+
+First differing element 1:
+TextNode(inline, TextType.TEXT, None)
+TextNode(inline, TextType.BOLD, None)
+
+  [TextNode(This is some text with , TextType.TEXT, None),
+-  TextNode(inline, TextType.TEXT, None),
+?                            ^^^^
+
++  TextNode(inline, TextType.BOLD, None),
+?                            ^^^^
+
+   TextNode( Markdown, TextType.TEXT, None)]
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.002s
+
+FAILED (failures=1)
