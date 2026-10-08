@@ -1,6 +1,6 @@
 import unittest
 from markdown_to_html_node import markdown_to_html_node
-from htmlnode import HTMLNode
+from parentnode import ParentNode
 
 class TestMarkdownToHTMLNode(unittest.TestCase):
 
@@ -11,8 +11,7 @@ text in a p
 tag here
 
 This is another paragraph with _italic_ text and `code` here
-
-        """
+"""  
 
         node = markdown_to_html_node(md)
         html = node.to_html()
@@ -26,12 +25,13 @@ This is another paragraph with _italic_ text and `code` here
 ```
 This is text that _should_ remain
 the **same** even with inline stuff
-```
+```\n
 """
+
 
         node = markdown_to_html_node(md)
         html = node.to_html()
         self.assertEqual(
             html,
-            "<div><pre><code>This is text that _should_ remain\nthe **same** even with the inline stuff\n</code></pre></div>",
+            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )

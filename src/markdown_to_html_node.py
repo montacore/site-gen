@@ -11,18 +11,13 @@ from text_node_to_html_node import text_node_to_html_node
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
    
-    html_node = HTMLNode(tag="div", children=[])
-    #TODO: 1.Split the markdown into blocks(BlockType) using markdown_to_blocks
+    html_node = ParentNode(tag="div", children=[])
     blocks = markdown_to_blocks(markdown)
-    #TODO:Loop over each block
     for block in blocks:
         #NOTE: convert blocks to BlockType
         if html_node.children is not None:
             html_node.children.append(create_html_node_from_block(block))
     return html_node
-    #TODO: Based on the type of block, create a new HTMLNode object with the proper data
-    #TODO: Assign the proper child HTMLNode objects to the block node.
-    #NOTE: Created a shared text_to_children(text) function that works for all block types. It takes a string of text and returns a list of HTMLNodes that represent the inline markdown using previously created functions. (Think TextNode -> HTMLNode)
 
 
 def text_to_children(text: str) -> list[HTMLNode]:
@@ -33,7 +28,7 @@ def text_to_children(text: str) -> list[HTMLNode]:
             text: str - block text provided to the function after greater markdown string is seperated into blocks based on markdown type.
 
         returns:
-            list[HTMLNodes] 
+            list[ParentNodes] 
 
         Methodology:
             create empty result list
@@ -47,17 +42,6 @@ def text_to_children(text: str) -> list[HTMLNode]:
 
     return res
 
-    #TODO: Make all the block nodes children under a single parent HTML node, which should just be a div and return it.
-    #TODO: Create unit tests: 
-
-
-    #FIXME: Quote blocks should be surrounded by a <blockquote> tag
-    # unordered list blocks should be surrounded by a <ul> tag and each list item should be surrounded by a <li< tag.
-    # Ordered list blocks should be surrounded by a <ol> tag and each list  item should be surrounded by a <li> tag.
-    # Code bl ocks should be surrounded by a <code> tag nested inside a <pre> tag.
-    # Heading should be surrounded by a <h1> to <h6> tag depending on the number of # characters.
-    # Paragraphs should be surrounded by a <p> tag. I removed thewlines and replaced them with spaces
-
 def create_html_node_from_block(block: str) -> HTMLNode:
     convert_block = block_to_block_type(block)
     if convert_block == BlockType.quote:
@@ -67,29 +51,24 @@ def create_html_node_from_block(block: str) -> HTMLNode:
             cleaned_lines.append(cleaned_line)
 
         cleaned_text = "\n".join(cleaned_lines)
-        return HTMLNode(tag="blockquote", children=text_to_children(cleaned_text))
+        return ParentNode(tag="blockquote", children=text_to_children(cleaned_text))
     elif convert_block == BlockType.unordered_list:
         items = block.split("\n")
-        return HTMLNode("ul", children=[i for i in [HTMLNode("li", children=text_to_children(item.strip('-').strip())) for item in items]])
+        return ParentNode("ul", children=[i for i in [ParentNode("li", children=text_to_children(item.strip('-').strip())) for item in items]])
     elif convert_block == BlockType.ordered_list:
         items = block.split("\n")
-        return HTMLNode("ol", children=[i for i in [HTMLNode("li", children=text_to_children(item.strip("0123456789.").strip())) for item in items]])
+        return ParentNode("ol", children=[i for i in [ParentNode("li", children=text_to_children(item.strip("0123456789.").strip())) for item in items]])
     elif convert_block == BlockType.code:
-        text_node = TextNode(block, TextType.TEXT)
-        return HTMLNode("pre", children=[HTMLNode("code", children=[text_node_to_html_node(text_node)])])
+        code_slice = block[4:-3]
+        text_node = TextNode(code_slice, TextType.TEXT)
+        return ParentNode("pre", children=[ParentNode("code", children=[text_node_to_html_node(text_node)])])
     elif convert_block == BlockType.heading:
         heading_level = len(block) - len(block.lstrip("#"))
-        return HTMLNode(tag=f"h{heading_level}", children=text_to_children(block[heading_level:].strip()))
+        return ParentNode(tag=f"h{heading_level}", children=text_to_children(block[heading_level:].strip()))
     elif convert_block == BlockType.paragraph:
-        return HTMLNode(tag="p", children=text_to_children(block))
+        sp = block.split("\n")
+        j = " ".join(sp)
+        return ParentNode(tag="p", children=text_to_children(j))
     else:
         raise Exception("Unsupported block type: " + str(convert_block))
 
-md = """
-### This is a heading
-
-- This is a list item
-- This is another list item
-- and another
-"""
-print(type(markdown_to_html_node(md)))
