@@ -17,23 +17,35 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
     #TODO:Loop over each block
     for block in blocks:
         #NOTE: convert blocks to BlockType
-        block_type = block_to_block_type(block)
-        html_node.children.append(create_html_node_from_block(block))
+        if html_node.children is not None:
+            html_node.children.append(create_html_node_from_block(block))
+    return html_node
+    #TODO: Based on the type of block, create a new HTMLNode object with the proper data
+    #TODO: Assign the proper child HTMLNode objects to the block node.
+    #NOTE: Created a shared text_to_children(text) function that works for all block types. It takes a string of text and returns a list of HTMLNodes that represent the inline markdown using previously created functions. (Think TextNode -> HTMLNode)
 
-    return html_node.children
-        #TODO: Based on the type of block, create a new HTMLNode object with the proper data
-        #TODO: Assign the proper child HTMLNode objects to the block node.
-        #NOTE: Created a shared text_to_children(text) function that works for all block types. It takes a string of text and returns a list of HTMLNodes that represent the inline markdown using previously created functions. (Think TextNode -> HTMLNode)
+
 def text_to_children(text: str) -> list[HTMLNode]:
+    """
+        function for use by each different type of htmlnode instance to pass text to the child nodes below the parent node being created.
+
+        args:
+            text: str - block text provided to the function after greater markdown string is seperated into blocks based on markdown type.
+
+        returns:
+            list[HTMLNodes] 
+
+        Methodology:
+            create empty result list
+            create text node using text_to_textnodes(text)[passing the entire text string]
+            for each node within those created text nodes, append the result of calling text_node_to_html_node on each individual node within the iteration.
+    """
     res = []
     create_text_node = text_to_textnodes(text)
     for node in create_text_node:
         res.append(text_node_to_html_node(node))
 
     return res
-
-        #TODO: The "code" blck is a bit of a special case. It should not do any inline markdown parsing of its children. 
-        #NOTE: Do not use text_to_children() for this block type. Manually make a TextNode and use text_node_to_html_node
 
     #TODO: Make all the block nodes children under a single parent HTML node, which should just be a div and return it.
     #TODO: Create unit tests: 
@@ -49,20 +61,35 @@ def text_to_children(text: str) -> list[HTMLNode]:
 def create_html_node_from_block(block: str) -> HTMLNode:
     convert_block = block_to_block_type(block)
     if convert_block == BlockType.quote:
-        return HTMLNode(tag="blockquote", children=text_to_children(block))
+        cleaned_lines = []
+        for line in block.strip().split("\n"):
+            cleaned_line = line.lstrip("> ")
+            cleaned_lines.append(cleaned_line)
+
+        cleaned_text = "\n".join(cleaned_lines)
+        return HTMLNode(tag="blockquote", children=text_to_children(cleaned_text))
     elif convert_block == BlockType.unordered_list:
-        return HTMLNode("ul", children=HTMLNode("li", children=text_to_children(block.strip("-").strip())))
+        items = block.split("\n")
+        return HTMLNode("ul", children=[i for i in [HTMLNode("li", children=text_to_children(item.strip('-').strip())) for item in items]])
     elif convert_block == BlockType.ordered_list:
         items = block.split("\n")
         return HTMLNode("ol", children=[i for i in [HTMLNode("li", children=text_to_children(item.strip("0123456789.").strip())) for item in items]])
     elif convert_block == BlockType.code:
-        text_node = TextNode(block, TextType.text)
-        return HTMLNode("pre", children=text_to_children([HTMLNode("code", children=)]))
+        text_node = TextNode(block, TextType.TEXT)
+        return HTMLNode("pre", children=[HTMLNode("code", children=[text_node_to_html_node(text_node)])])
     elif convert_block == BlockType.heading:
-        heading_level = block.count('#')
-        return HTMLNode(tag=f"h{heading_level}", children=text_to_children(block.strip('#').strip()))
+        heading_level = len(block) - len(block.lstrip("#"))
+        return HTMLNode(tag=f"h{heading_level}", children=text_to_children(block[heading_level:].strip()))
     elif convert_block == BlockType.paragraph:
         return HTMLNode(tag="p", children=text_to_children(block))
     else:
         raise Exception("Unsupported block type: " + str(convert_block))
 
+md = """
+### This is a heading
+
+- This is a list item
+- This is another list item
+- and another
+"""
+print(type(markdown_to_html_node(md)))

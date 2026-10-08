@@ -1,0 +1,20 @@
+[('rick roll', 'https://i.imgur.com/aKaqIh.gif')]
+[('to boot dev', 'https://www.boot.dev'), ('to youtube', 'https://www.youtube.com/@bootdotdev')]
+Traceback (most recent call last):
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/markdown_to_html_node.py", line 78, in <module>
+    print(type(markdown_to_html_node(md)))
+               ~~~~~~~~~~~~~~~~~~~~~^^^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/markdown_to_html_node.py", line 22, in markdown_to_html_node
+    html_node.children.append(create_html_node_from_block(block))
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/markdown_to_html_node.py", line 65, in create_html_node_from_block
+    return HTMLNode(tag=f"h{heading_level}", children=text_to_children(block[heading_level:].strip()))
+                                                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/markdown_to_html_node.py", line 30, in text_to_children
+    create_text_node = text_to_textnodes(text)
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/text_to_textnodes.py", line 7, in text_to_textnodes
+    bold_nodes = split_nodes_delimiter(text, "**", TextType.BOLD)
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/split_nodes_delimiter.py", line 8, in split_nodes_delimiter
+    if old_node.text_type != TextType.TEXT:
+       ^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'text_type'
