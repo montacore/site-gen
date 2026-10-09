@@ -1,0 +1,22 @@
+[('rick roll', 'https://i.imgur.com/aKaqIh.gif')]
+[('to boot dev', 'https://www.boot.dev'), ('to youtube', 'https://www.youtube.com/@bootdotdev')]
+Removing file: ./public/index.css
+Removing directory tree ./public/images
+Successfully syncronized public folder
+Successfully syncronized public folder
+Generating page from ./content/index.md to ./public/index.html using ./template.html
+Traceback (most recent call last):
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/main.py", line 11, in <module>
+    main()
+    ~~~~^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/main.py", line 7, in main
+    generate_page("./content/index.md", "./template.html", "./public/index.html")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/generate_page.py", line 17, in generate_page
+    title = extract_title(content)
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/extract_title.py", line 10, in extract_title
+    raise Exception("No H1 header found")
+Exception: No H1 header found
+Serving HTTP on 0.0.0.0 port 8888 (http://0.0.0.0:8888/) ...
+
+Keyboard interrupt received, exiting.

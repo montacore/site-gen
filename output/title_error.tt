@@ -1,0 +1,53 @@
+[('rick roll', 'https://i.imgur.com/aKaqIh.gif')]
+[('to boot dev', 'https://www.boot.dev'), ('to youtube', 'https://www.youtube.com/@bootdotdev')]
+Removing file: ./public/index.css
+Removing directory tree ./public/images
+Successfully syncronized public folder
+Successfully syncronized public folder
+Generating page from ./content/index.md to ./public/index.html using ./template.html
+ParentNode(div, None, [ParentNode(h1, None, [LeafNode(None, Tolkien Fan Club, None)], None), ParentNode(p, None, [LeafNode(img, , {'src': '/images/tolkien.png', 'alt': 'JRR Tolkien sitting'})], None), ParentNode(p, None, [LeafNode(None, Here's the deal, , None), LeafNode(b, I like Tolkien, None), LeafNode(None, ., None)], None), ParentNode(blockquote, None, [LeafNode(None, "I am in fact a Hobbit in all but size."
+
+-- J.R.R. Tolkien, None)], None), ParentNode(h2, None, [LeafNode(None, Blog posts, None)], None), ParentNode(ul, None, [ParentNode(li, None, [LeafNode(a, Why Glorfindel is More Impressive than Legolas, {'href': '/blog/glorfindel'})], None), ParentNode(li, None, [LeafNode(a, Why Tom Bombadil Was a Mistake, {'href': '/blog/tom'})], None), ParentNode(li, None, [LeafNode(a, The Unparalleled Majesty of "The Lord of the Rings", {'href': '/blog/majesty'})], None)], None), ParentNode(h2, None, [LeafNode(None, Reasons I like Tolkien, None)], None), ParentNode(ul, None, [ParentNode(li, None, [LeafNode(None, You can spend years studying the legendarium and still not understand its depths, None)], None), ParentNode(li, None, [LeafNode(None, It can be enjoyed by children and adults alike, None)], None), ParentNode(li, None, [LeafNode(None, Disney , None), LeafNode(i, didn't ruin it, None), LeafNode(None,  (okay, but Amazon might have), None)], None), ParentNode(li, None, [LeafNode(None, It created an entirely new genre of fantasy, None)], None)], None), ParentNode(h2, None, [LeafNode(None, My favorite characters (in order), None)], None), ParentNode(ol, None, [ParentNode(li, None, [LeafNode(None, Gandalf, None)], None), ParentNode(li, None, [LeafNode(None, Bilbo, None)], None), ParentNode(li, None, [LeafNode(None, Sam, None)], None), ParentNode(li, None, [LeafNode(None, Glorfindel, None)], None), ParentNode(li, None, [LeafNode(None, Galadriel, None)], None), ParentNode(li, None, [LeafNode(None, Elrond, None)], None), ParentNode(li, None, [LeafNode(None, Thorin, None)], None), ParentNode(li, None, [LeafNode(None, Sauron, None)], None), ParentNode(li, None, [LeafNode(None, Aragorn, None)], None)], None), ParentNode(p, None, [LeafNode(None, Here's what , None), LeafNode(code, elflang, None), LeafNode(None,  looks like (the perfect coding language):, None)], None), ParentNode(pre, None, [ParentNode(code, None, [LeafNode(None, func main(){
+    fmt.Println("Aiya, Ambar!")
+}
+, None)], None)], None), ParentNode(p, None, [LeafNode(None, Want to get in touch? , None), LeafNode(a, Contact me here, {'href': '/contact'}), LeafNode(None, ., None)], None), ParentNode(p, None, [LeafNode(None, This site was generated with a custom-built , None), LeafNode(a, static site generator, {'href': 'https://www.boot.dev/courses/build-static-site-generator-python'}), LeafNode(None,  from the course on , None), LeafNode(a, Boot.dev, {'href': 'https://www.boot.dev'}), LeafNode(None, ., None)], None)], None)
+Traceback (most recent call last):
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/main.py", line 11, in <module>
+    main()
+    ~~~~^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/main.py", line 7, in main
+    generate_page("./content/index.md", "./template.html", "./public/index.html")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/generate_page.py", line 18, in generate_page
+    title = extract_title(node)
+  File "/home/jtnallie/personal/projects/python/static_site_generator/src/extract_title.py", line 10, in extract_title
+    raise Exception("No H1 header found")
+Exception: No H1 header found
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/usr/lib/python3.14/http/server.py", line 1436, in <module>
+    test(
+    ~~~~^
+        HandlerClass=handler_class,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        tls_password=tls_key_password,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/lib/python3.14/http/server.py", line 1352, in test
+    server = ServerClass(addr, HandlerClass)
+  File "/usr/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/server.py", line 1423, in server_bind
+    return super().server_bind()
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/server.py", line 150, in server_bind
+    self.server_name = socket.getfqdn(host)
+                       ~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/socket.py", line 817, in getfqdn
+    hostname, aliases, ipaddrs = gethostbyaddr(name)
+                                 ~~~~~~~~~~~~~^^^^^^
+KeyboardInterrupt

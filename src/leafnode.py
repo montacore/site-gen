@@ -23,7 +23,7 @@ class LeafNode(HTMLNode):
             If props are passed then they are handled with parent method props_to_html
             
         """
-        if not self.value:
+        if self.value == None:
             raise ValueError("All leaf nodes must contain a value")
         if self.tag == None:
             return f"{self.value}"
